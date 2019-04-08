@@ -1,0 +1,9 @@
+PixiePro:
+M:	Alfredo Cabral <alfredo.cabral@code-ing.com>
+M:	Valentina Fernandez <valentina.fernandez@code-ing.com>
+S:	Maintained
+F:	board/pixiepro/
+F:	include/configs/pixiepro.h
+F:	include/configs/mx6pixiepro_common.h
+F:	configs/pixieprodl_config
+F:      configs/pixieproq_config
