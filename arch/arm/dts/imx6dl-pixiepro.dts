@@ -1,0 +1,36 @@
+/*
+ * Copyright (C) 2013 Freescale Semiconductor, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "imx6dl.dtsi"
+#include "imx6qdl-pixiepro.dtsi"
+
+/ {
+	model = "CODE PixiePro i.MX6DL RevA";
+	compatible = "fsl,imx6dl-pixiepro", "fsl,imx6dl";
+
+	memory: memory {
+		reg = <0x10000000 0x40000000>;
+	};
+
+};
+&ldb {
+	lvds-channel@0 {
+		crtc = "ipu1-di0";
+	};
+	lvds-channel@1 {
+		crtc = "ipu1-di1";
+	};
+};
+&mxcfb1 {
+	status = "okay";
+};
+&mxcfb2 {
+	status = "okay";
+};

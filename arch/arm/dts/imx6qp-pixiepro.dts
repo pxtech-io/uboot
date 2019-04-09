@@ -1,0 +1,129 @@
+/*
+ * Copyright 2012 Freescale Semiconductor, Inc.
+ * Copyright 2011 Linaro Ltd.
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+
+#include "imx6qp.dtsi"
+#include "imx6qdl-pixiepro.dtsi"
+
+/ {
+	model = "CODE PixiePro+ i.MX6QP RevC";
+	compatible = "fsl,imx6qp-pixiepro", "fsl,imx6qp";
+
+	memory: memory {
+		reg = <0x10000000 0x80000000>;
+	};
+
+	sound-sgtl5000 {
+		compatible = "fsl,imx6-pixieboard-sgtl5000",
+			     "fsl,imx-audio-sgtl5000";
+		model = "imx6-pixieboard-sgtl5000";
+		ssi-controller = <&ssi1>;
+		audio-codec = <&codec>;
+		audio-routing =
+			"MIC_IN", "Mic Jack",
+			"Mic Jack", "Mic Bias",
+			"Headphone Jack", "HP_OUT";
+		mux-int-port = <1>;
+		mux-ext-port = <4>;
+	};
+
+};
+
+
+
+&i2c2 {
+		
+	codec: sgtl5000@0a {
+	compatible = "fsl,sgtl5000";
+	reg = <0x0a>;
+	clocks = <&clks 201>;
+	VDDA-supply = <&reg_2p5v>;
+	VDDIO-supply = <&reg_3p3v>;
+	};
+
+	accelerometer: fxos8700@1e {
+	compatible = "fsl,fxos8700";
+	reg = <0x1e>;
+   };
+
+   	gyroscope: fxas2100x@20 {
+	compatible = "fsl,fxas2100x";
+	reg = <0x20>;
+   };
+
+};
+
+&ldb {
+	lvds-channel@0 {
+		crtc = "ipu2-di0";
+	};
+
+	lvds-channel@1 {
+		crtc = "ipu2-di1";
+	};
+};
+
+&mxcfb1 {
+	prefetch;
+	status = "okay";
+};
+
+&mxcfb2 {
+	prefetch;
+	status = "okay";
+};
+
+&mxcfb3 {
+	prefetch;
+	status = "okay";
+};
+
+&mxcfb4 {
+	prefetch;
+	status = "okay";
+};
+
+&audmux {
+	status = "okay";
+};
+
+&pre1 {
+	status = "okay";
+};
+
+&pre2 {
+	status = "okay";
+};
+
+&pre3 {
+	status = "okay";
+};
+
+&pre4 {
+	status = "okay";
+};
+
+&prg1 {
+	memory-region = <&memory>;
+	status = "okay";
+};
+
+&prg2 {
+	memory-region = <&memory>;
+	status = "okay";
+};
+
+&pcie {
+	status = "okay";
+};
+

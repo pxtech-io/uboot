@@ -1,0 +1,164 @@
+/*
+ * Copyright (C) 2013 Freescale Semiconductor, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "imx6q.dtsi"
+#include "imx6qdl-pixiepro.dtsi"
+
+/ {
+	model = "CODE PixiePro i.MX6DL RevA";
+	compatible = "fsl,imx6q-pixiepro", "fsl,imx6q";
+
+	memory {
+		reg = <0x10000000 0x80000000>;
+	};
+
+	sound-sgtl5000 {
+		compatible = "fsl,imx6-pixieboard-sgtl5000",
+			     "fsl,imx-audio-sgtl5000";
+		model = "imx6-pixieboard-sgtl5000";
+		ssi-controller = <&ssi1>;
+		audio-codec = <&codec>;
+		audio-routing =
+			"MIC_IN", "Mic Jack",
+			"Mic Jack", "Mic Bias",
+			"Headphone Jack", "HP_OUT";
+		mux-int-port = <1>;
+		mux-ext-port = <4>;
+	};
+
+	rgbleds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_rgbled>;
+
+		ledred: ledred {
+			gpios = <&gpio4 24 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
+		ledgreen: ledgreen {
+			gpios = <&gpio4 22 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+
+		ledblue: ledblue {
+			gpios = <&gpio4 20 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+		leden: leden {
+			gpios = <&gpio1 5 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+		fdtien: ftdien {
+			gpios = <&gpio4 21 GPIO_ACTIVE_LOW>;
+			default-state = "off";
+		};
+	};
+
+};
+
+&iomuxc {
+	pinctrl-names = "default";
+
+	imx6qdl-pixiepro-router {
+
+		pinctrl_router: routergrp {
+			fsl,pins = <
+				MX6QDL_PAD_DI0_DISP_CLK__GPIO4_IO16		0x80000000 //PHALANXRESET_A
+				MX6QDL_PAD_DI0_PIN2__GPIO4_IO18			0x80000000 //PHALANXRESET_D
+				MX6QDL_PAD_DI0_PIN3__GPIO4_IO19			0x80000000 //PHALANXRESET_B
+				MX6QDL_PAD_DISP0_DAT4__GPIO4_IO25		0x80000000 //OVER_TEMP
+				MX6QDL_PAD_DI0_PIN15__GPIO4_IO17		0x80000000 //PHALANXRESET_C
+				MX6QDL_PAD_DI0_PIN15__GPIO4_IO17		0x80000000 //PHALANXRESET_E
+				MX6QDL_PAD_DISP0_DAT8__GPIO4_IO29		0x80000000 //PHALANXRESET_F
+				MX6QDL_PAD_DISP0_DAT2__GPIO4_IO23		0x80000000 //ENET_RST_PIXIE
+				//MX6QDL_PAD_DISP0_DAT0__GPIO4_IO21		0x80000000 //!RESET_FTDI_A
+				MX6QDL_PAD_DISP0_DAT6__GPIO4_IO27		0x80000000 //GPIO_INPUT_1
+				MX6QDL_PAD_DISP0_DAT5__GPIO4_IO26		0x80000000 //!RESET_FTDI_B
+				MX6QDL_PAD_DISP0_DAT7__GPIO4_IO28		0x80000000 //GPIO_INPUT_2
+				MX6QDL_PAD_DISP0_DAT11__GPIO5_IO05		0x80000000 //GPIO_OUTPUT_1
+				MX6QDL_PAD_DISP0_DAT9__GPIO4_IO30		0x80000000 //GPIO_INPUT_3
+				MX6QDL_PAD_DISP0_DAT12__GPIO5_IO06		0x80000000 //GPIO_OUTPUT_2
+				MX6QDL_PAD_DISP0_DAT15__GPIO5_IO09		0x80000000 //GPIO_INPUT_4
+				MX6QDL_PAD_DISP0_DAT14__GPIO5_IO08		0x80000000 //GPIO_OUTPUT_3
+				MX6QDL_PAD_DISP0_DAT10__GPIO4_IO31		0x80000000 //GPIO_BUTTON_1
+				MX6QDL_PAD_DISP0_DAT17__GPIO5_IO11		0x80000000 //GPIO_OUTPUT_4
+				MX6QDL_PAD_DISP0_DAT16__GPIO5_IO10		0x80000000 //GPIO_BUTTON_2
+				//MX6QDL_PAD_GPIO_5__GPIO1_IO05			0x80000000 //LED_EN  
+
+
+			>;
+		};
+
+		pinctrl_rgbled: rgbledgrp {
+			fsl,pins = <
+
+				MX6QDL_PAD_DISP0_DAT0__GPIO4_IO21		0x80000000 //!RESET_FTDI_A
+				MX6QDL_PAD_DISP0_DAT3__GPIO4_IO24		0x80000000 //GPIO_LED_R
+				MX6QDL_PAD_DISP0_DAT1__GPIO4_IO22		0x80000000 //GPIO_LED_G
+				MX6QDL_PAD_DI0_PIN4__GPIO4_IO20			0x80000000 //GPIO_LED_B
+				MX6QDL_PAD_GPIO_5__GPIO1_IO05			0x80000000 //LED_EN
+//				MX6QDL_PAD_DISP0_DAT3__GPIO4_IO24		0x80000000 //GPIO_LED_R
+//				MX6QDL_PAD_DISP0_DAT1__GPIO4_IO22		0x80000000 //GPIO_LED_G
+//				MX6QDL_PAD_DI0_PIN4__GPIO4_IO20			0x80000000 //GPIO_LED_B
+
+			>;
+		};
+	};
+};
+
+&i2c2 {
+		
+	codec: sgtl5000@0a {
+	compatible = "fsl,sgtl5000";
+	reg = <0x0a>;
+	clocks = <&clks 201>;
+	VDDA-supply = <&reg_2p5v>;
+	VDDIO-supply = <&reg_3p3v>;
+	};
+
+	accelerometer: fxos8700@1e {
+	compatible = "fsl,fxos8700";
+	reg = <0x1e>;
+   };
+
+   	gyroscope: fxas2100x@20 {
+	compatible = "fsl,fxas2100x";
+	reg = <0x20>;
+   };
+
+};
+
+&ldb {
+	lvds-channel@0 {
+		crtc = "ipu1-di0";
+	};
+	lvds-channel@1 {
+		crtc = "ipu1-di1";
+	};
+};
+&mxcfb1 {
+	status = "okay";
+};
+&mxcfb2 {
+	status = "okay";
+};
+
+&usdhc2 {
+	status = "okay";
+};
+
+&fec {
+	status = "okay";
+};
+
+&i2c3 {
+	status = "disabled";
+};

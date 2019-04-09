@@ -1,0 +1,15 @@
+if TARGET_PIXIEPRO
+
+config SYS_BOARD
+	default "pixiepro"
+
+config SYS_VENDOR
+	default "codemodules"
+
+config SYS_CONFIG_NAME
+	default "pixiepro"
+
+config PIXIEPRO_EMMCTARGET
+	bool "Is target eMMC?"
+
+endif
